@@ -1,0 +1,265 @@
+/* ------------------------------------------------------------------------
+   Signal Deck — design tokens
+   Subject: a solo trader's manual monitoring terminal. Not a consumer SaaS
+   product — it should read like an instrument panel: dense, calm, honest.
+   Monospace is used for numeric data specifically because this is a data
+   terminal where digit alignment matters, not as a decorative label font.
+   ------------------------------------------------------------------------ */
+:root {
+  --void: #0B0E11;
+  --panel: #12161C;
+  --panel-raised: #171C24;
+  --line: #232933;
+  --ink: #E7EAEE;
+  --ink-dim: #8892A0;
+  --ink-faint: #565E6B;
+
+  --buy: #35C488;
+  --buy-dim: #1F5C43;
+  --sell: #E2574C;
+  --sell-dim: #6B2822;
+  --watch: #D9A441;
+  --watch-dim: #6B5423;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --radius: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+a { color: inherit; }
+
+::selection { background: var(--buy-dim); color: var(--ink); }
+
+/* ---------- App shell ---------- */
+.app-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: 100vh;
+}
+
+.rail {
+  border-right: 1px solid var(--line);
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.rail-brand {
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.rail-brand .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--buy);
+  display: inline-block;
+}
+
+.rail-link {
+  padding: 9px 10px;
+  border-radius: var(--radius);
+  color: var(--ink-dim);
+  text-decoration: none;
+  font-size: 14px;
+  transition: background 0.12s, color 0.12s;
+}
+.rail-link:hover { background: var(--panel-raised); color: var(--ink); }
+.rail-link.active { background: var(--panel-raised); color: var(--ink); border-left: 2px solid var(--buy); padding-left: 8px; }
+
+.rail-disclaimer {
+  margin-top: auto;
+  font-size: 11px;
+  color: var(--ink-faint);
+  line-height: 1.5;
+  padding: 12px 10px;
+  border-top: 1px solid var(--line);
+}
+
+.main {
+  padding: 28px 32px 60px;
+  max-width: 1400px;
+}
+
+.page-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-sub {
+  color: var(--ink-dim);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* ---------- Table ---------- */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.data-table thead th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--ink-faint);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.data-table tbody td {
+  padding: 13px 14px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+.data-table tbody tr {
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.data-table tbody tr:hover { background: var(--panel); }
+
+.coin-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.mono { font-family: var(--font-mono); }
+
+.pos { color: var(--buy); }
+.neg { color: var(--sell); }
+
+/* ---------- Badges (state vocabulary — this is the product's real terminology) ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+.badge-watching { background: var(--panel-raised); color: var(--ink-dim); border: 1px solid var(--line); }
+.badge-weak { background: rgba(217,164,65,0.1); color: var(--watch); border: 1px solid var(--watch-dim); }
+.badge-buy { background: rgba(53,196,136,0.12); color: var(--buy); border: 1px solid var(--buy-dim); }
+.badge-strong-buy { background: var(--buy); color: #06110C; border: 1px solid var(--buy); }
+.badge-sell { background: rgba(226,87,76,0.12); color: var(--sell); border: 1px solid var(--sell-dim); }
+.badge-stop { background: var(--sell); color: #1A0705; border: 1px solid var(--sell); }
+.badge-target { background: rgba(217,164,65,0.12); color: var(--watch); border: 1px solid var(--watch-dim); }
+
+/* ---------- Panels / cards ---------- */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+}
+
+.score-ring-wrap { display: flex; align-items: center; gap: 12px; }
+
+.reason-list { list-style: none; padding: 0; margin: 10px 0 0; font-size: 13px; color: var(--ink-dim); }
+.reason-list li { padding: 5px 0 5px 16px; position: relative; }
+.reason-list li::before { content: "—"; position: absolute; left: 0; color: var(--ink-faint); }
+
+/* ---------- Forms ---------- */
+.field-row { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+.field-row label { font-size: 12px; color: var(--ink-dim); }
+.field-row input, .field-row select {
+  background: var(--void);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+.field-row input:focus, .field-row select:focus { outline: 2px solid var(--buy-dim); border-color: var(--buy); }
+
+.btn {
+  border: 1px solid var(--line);
+  background: var(--panel-raised);
+  color: var(--ink);
+  padding: 9px 16px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.btn:hover { border-color: var(--ink-faint); }
+.btn-primary { background: var(--buy); color: #06110C; border-color: var(--buy); font-weight: 600; }
+.btn-danger { background: transparent; color: var(--sell); border-color: var(--sell-dim); }
+
+/* ---------- Alert feed ---------- */
+.alert-feed { display: flex; flex-direction: column; gap: 8px; max-height: 480px; overflow-y: auto; }
+.alert-item {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--ink-faint);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-size: 12.5px;
+  background: var(--panel);
+}
+.alert-item.buy { border-left-color: var(--buy); }
+.alert-item.sell { border-left-color: var(--sell); }
+.alert-item.stop { border-left-color: var(--sell); background: rgba(226,87,76,0.06); }
+.alert-item .alert-title { font-weight: 600; font-family: var(--font-mono); margin-bottom: 3px; }
+.alert-item .alert-msg { color: var(--ink-dim); line-height: 1.5; }
+
+/* ---------- Disclaimer strip ---------- */
+.disclaimer-strip {
+  font-size: 11.5px;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+  margin-top: 20px;
+  line-height: 1.6;
+}
+
+/* ---------- Grid layouts ---------- */
+.two-col { display: grid; grid-template-columns: 1fr 340px; gap: 20px; align-items: start; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+
+@media (max-width: 900px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .rail { display: none; }
+  .two-col { grid-template-columns: 1fr; }
+}
